@@ -1,0 +1,63 @@
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+public class AdventureGame extends JFrame implements ActionListener {
+    private JTextArea displayArea;
+    private JTextField inputField;
+    private JButton submitButton;
+
+    public AdventureGame() {
+        setTitle("Text-Based Adventure Game");
+        setSize(600, 400);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setLocationRelativeTo(null);
+
+        displayArea = new JTextArea();
+        displayArea.setEditable(false);
+        displayArea.setLineWrap(true);
+        displayArea.setWrapStyleWord(true);
+        JScrollPane scrollPane = new JScrollPane(displayArea);
+
+        inputField = new JTextField(40);
+        submitButton = new JButton("Submit");
+        submitButton.addActionListener(this);
+
+        JPanel panel = new JPanel();
+        panel.add(inputField);
+        panel.add(submitButton);
+
+        add(scrollPane, BorderLayout.CENTER);
+        add(panel, BorderLayout.SOUTH);
+
+        setVisible(true);
+        displayMessage("Welcome to the Adventure Game!\nEnter your command:");
+    }
+
+    private void displayMessage(String message) {
+        displayArea.append(message + "\n");
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        String input = inputField.getText();
+        inputField.setText("");
+        processCommand(input);
+    }
+
+    private void processCommand(String command) {
+        // Add logic here to process player commands
+        if (command.equalsIgnoreCase("look")) {
+            displayMessage("You are in a dark room. There is a door to the north.");
+        } else if (command.equalsIgnoreCase("north")) {
+            displayMessage("You move north and find yourself in a bright hallway.");
+        } else {
+            displayMessage("Unknown command. Try 'look' or 'north'.");
+        }
+    }
+
+    public static void main(String[] args) {
+        new AdventureGame();
+    }
+}
